@@ -1,0 +1,17 @@
+services:
+  kladovka:
+    image: ${DOCKER_REGISTRY-}kladovka
+    build:
+      context: .
+      dockerfile: Kladovka/Dockerfile
+    ports:
+      - "5000:8081"
+
+  security:
+    image: ${DOCKER_REGISTRY-}security
+    build:
+      context: .
+      dockerfile: Security/Dockerfile
+    ports:
+      - "5001:8081"
+
