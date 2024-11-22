@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kladovka", "Kladovka\Kladovka.csproj", "{5255C606-6903-4835-8115-C83C62F48411}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "Security\Security.csproj", "{FE576129-5AB1-4D03-9F0D-294E3C9896F5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5255C606-6903-4835-8115-C83C62F48411} = {5255C606-6903-4835-8115-C83C62F48411}
+	EndProjectSection
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{70DD5536-C1FC-4F49-BB79-D8889B479B81}"
 EndProject

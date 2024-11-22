@@ -21,9 +21,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    await using var scope = app.Services.CreateAsyncScope();
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    await context.Database.MigrateAsync();
+    //await using var scope = app.Services.CreateAsyncScope();
+    //var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    //await context.Database.MigrateAsync();
 }
 
 app.UseHttpsRedirection();
