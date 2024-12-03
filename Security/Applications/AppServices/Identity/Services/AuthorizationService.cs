@@ -1,5 +1,6 @@
 ﻿using Security.Applications.AppServices.Identity.Services.Abstract;
 using Security.Clients.Keycloack;
+using Security.Clients.Keycloak.Generated;
 using Security.Contracts.Identity.Response;
 
 namespace Security.Applications.AppServices.Identity.Services;
@@ -15,6 +16,16 @@ public class AuthorizationService : IAuthorizationService
         _logger = logger;
     }
 
+    public async Task<string> RegisterAsync(
+            string firstName,
+            string lastName,
+            string username,
+            string password,
+            string email, CancellationToken cancellationToken)
+    {
+        var response = await _keycloack.RegisterUser(firstName, lastName, username, password, email, cancellationToken);
+        return response.ToString()!;
+    }
     public async Task<LoginResponse> AuthorizeAsync(string username, string password, CancellationToken cancellationToken)
     {
         var response = await _keycloack.AuthorizeAsync(username, password, cancellationToken);

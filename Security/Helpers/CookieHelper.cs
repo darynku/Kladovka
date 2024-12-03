@@ -12,6 +12,7 @@
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
+
             };
             cookie.Append(AccessTokenName, accessToken, cookieOption);
         }

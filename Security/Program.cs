@@ -10,11 +10,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerOAuth2(builder.Configuration);
 builder.Services
     .AddKeycloak(builder.Configuration)
     .AddHandlers()
-    .AddClients();
+    .AddClients(builder.Configuration)
+    .AddSwaggerOAuth2(builder.Configuration);
+
 
 var app = builder.Build();
 
@@ -29,11 +30,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseAuthorization();
-
-app.MapGet("users/claims", (ClaimsPrincipal claimsPrincipal) =>
-{
-    return claimsPrincipal.Claims.ToDictionary(c => c.Type, c => c.Value);
-}).RequireAuthorization();
 
 app.MapControllers();
 

@@ -1,6 +1,6 @@
 {
-  "runtime": "WinX64",
-  "defaultVariables": null,
+  "runtime": "winx64",
+  "defaultVariables": "",
   "documentGenerator": {
     "fromDocument": {
       "json": "",
