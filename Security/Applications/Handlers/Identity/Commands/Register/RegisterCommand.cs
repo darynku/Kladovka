@@ -3,7 +3,7 @@ using Security.Contracts.Identity;
 
 namespace Security.Applications.Handlers.Identity.Commands.Register
 {
-    public class RegisterCommand: Command<string>
+    public class RegisterCommand: Command
     {
         public RegisterCommand(RegisterData data)
         {

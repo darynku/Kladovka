@@ -2,6 +2,7 @@
 {
     public class KeycloakOptions
     {
+        public string ClientUuid { get; init; } = string.Empty;
         public string Authority { get; init; } = string.Empty;
         public string AuthorizationUrl { get; init; } = string.Empty;
         public string ClientId { get; init; } = string.Empty;

@@ -3,6 +3,7 @@ using IdentityModel.Client;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Security.Clients.Keycloack.Models.Requests;
 using Security.Clients.Keycloak.Generated;
 using Security.Clients.Options;
 using Security.Contracts.Enums;
@@ -38,7 +39,7 @@ namespace Security.Clients.Keycloack
                 Policy = { RequireHttps =  _options.RequireHttpsMetadata }
             }, cancellationToken);
         }
-        public async Task<object> RegisterUser(
+        public async Task RegisterUser(
             string firstName,
             string lastName,
             string username,
@@ -69,7 +70,6 @@ namespace Security.Clients.Keycloack
 
                 var client = _httpClientFactory.CreateClient();
 
-                // Получение токена администратора
                 var tokenRequest = new HttpRequestMessage(HttpMethod.Post, $"{_options.ApiAdminBaseUrl}/realms/{_options.Realm}/protocol/openid-connect/token")
                 {
                     Content = new FormUrlEncodedContent(new Dictionary<string, string>
@@ -102,10 +102,14 @@ namespace Security.Clients.Keycloack
 
                 var settings = new JsonSerializerSettings
                 {
-                    NullValueHandling = NullValueHandling.Ignore
+                    NullValueHandling = NullValueHandling.Include,
+                    Formatting = Formatting.Indented,
+            
                 };
+
+                var jsonModel = JsonConvert.SerializeObject(userRepresentation);
                 var jsonContent = new StringContent(
-                    JsonConvert.SerializeObject(userRepresentation),
+                    jsonModel,
                     Encoding.UTF8,
                     "application/json");
 
@@ -119,7 +123,8 @@ namespace Security.Clients.Keycloack
                 }
 
                 _logger.LogInformation($"Пользователь {username} успешно зарегистрирован в Keycloak.");
-                return userRepresentation;
+
+                await SetDefaultRoleAsync(username, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -184,6 +189,7 @@ namespace Security.Clients.Keycloack
         }
 
 
+
         private async Task SetDefaultRoleAsync(string username, CancellationToken cancellationToken)
         {
             
@@ -215,7 +221,7 @@ namespace Security.Clients.Keycloack
             {
                 return;
             }
-            await _generatedApi.ClientsPOST6Async(_options.Realm, userIdParam, "5f5a1caf-af31-45d8-aab1-60050d82957a", [defaultRole], cancellationToken);
+            await _generatedApi.ClientsPOST6Async(_options.Realm, userIdParam, "8dd4b223-fb05-4e7c-8896-c17bd502ed21", [defaultRole], cancellationToken);
         }
 
 

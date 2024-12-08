@@ -8,16 +8,23 @@ namespace Kladovka.Domain
         public required string Name { get; set; }
         public required string Description { get; set; }
         public decimal Price { get; set; }
-    }
+        public decimal Sales { get; set; }
+        public decimal Discount { get; set; }
 
-    public sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
-    {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void SetDiscount(decimal discountPercentage)
         {
-            builder.ToTable("Products");
-            builder.HasKey(p => p.Id);
-            builder.Property(p => p.Price)
-                .HasColumnType("decimal(18,2)");
+            if (discountPercentage < 0 || discountPercentage > 100)
+                throw new ArgumentException("Скидка должна быть в диапазоне от 0 до 100.");
+
+            Discount = discountPercentage;
+            Sales = CalculateSalesPrice();
         }
+
+        private decimal CalculateSalesPrice()
+        {
+            return Math.Round(Price * (1 - Discount / 100), 2);
+        }
+
+
     }
 }

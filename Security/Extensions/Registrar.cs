@@ -89,6 +89,8 @@ namespace Security.Extensions
             provider.GetRequiredService<ILogger<KeycloakAuthorizationApi>>(),
             provider.GetRequiredService<IKeycloakGeneratedExternalApiClient>())));
 
+            services.AddScoped(provider => new Lazy<>)
+
             return services;
         }
 

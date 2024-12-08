@@ -35,8 +35,7 @@ namespace Security.Controllers
 
         [HttpPost("registration")]
         [AllowAnonymous]
-        [ProducesDefaultResponseType(typeof(string))]
-        [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
@@ -44,8 +43,8 @@ namespace Security.Controllers
         public async Task<IActionResult> Register(RegisterData data, CancellationToken cancellationToken)
         {
             var request = new RegisterCommand(data);
-            var result = await _mediator.Send(request, cancellationToken);
-            return Ok(result);
+            await _mediator.Send(request, cancellationToken);
+            return NoContent();
         }
     }
 }

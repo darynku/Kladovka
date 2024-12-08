@@ -16,15 +16,14 @@ public class AuthorizationService : IAuthorizationService
         _logger = logger;
     }
 
-    public async Task<string> RegisterAsync(
+    public async Task RegisterAsync(
             string firstName,
             string lastName,
             string username,
             string password,
             string email, CancellationToken cancellationToken)
     {
-        var response = await _keycloack.RegisterUser(firstName, lastName, username, password, email, cancellationToken);
-        return response.ToString()!;
+        await _keycloack.RegisterUser(firstName, lastName, username, password, email, cancellationToken);
     }
     public async Task<LoginResponse> AuthorizeAsync(string username, string password, CancellationToken cancellationToken)
     {
