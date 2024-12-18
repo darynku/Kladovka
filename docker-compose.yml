@@ -27,6 +27,25 @@ services:
       - kladovka_network
 
 
+  notification:
+    image: ${DOCKER_REGISTRY-}notification
+    build:
+      context: .
+      dockerfile: Notification/Notification/Dockerfile
+    ports:
+      - "5002:8081"
+    networks:
+      - kladovka_network
+  
+  mail:
+    image: bytemark/smtp
+    restart: always
+    environment:
+      RELAY_HOST: smtp.example.com
+      RELAY_PORT: 587
+      RELAY_USERNAME: kladovka@example.com
+      RELAY_PASSWORD: 12345
+
   keycloak:
     image: quay.io/keycloak/keycloak:latest
     container_name: keycloak
@@ -122,5 +141,8 @@ services:
       - kafka
     networks:
       - kladovka_network
+ 
+
 volumes:
   postgres_data:
+
