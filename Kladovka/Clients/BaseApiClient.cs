@@ -22,7 +22,7 @@ namespace Kladovka.Clients
                 if (!respose.Result.IsSuccessStatusCode)
                 {
                     var error = await respose.Result.Content.ReadAsStringAsync(cancellationToken);
-                    throw new SEHException(error);
+                    throw new Exception(error);
                 }
             }
             catch (Exception ex)
